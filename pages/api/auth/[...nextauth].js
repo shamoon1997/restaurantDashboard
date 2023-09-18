@@ -19,6 +19,8 @@ const fetchData = async (apiUrl) => {
   }
 };
 
+const secret = process.env.NEXTAUTH_SECRET;
+
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -49,6 +51,6 @@ export const authOptions = {
       return true; // Return true to continue the sign-in process
     },
   },
-  secret: 'testString',
+  secret,
 };
 export default NextAuth(authOptions);
