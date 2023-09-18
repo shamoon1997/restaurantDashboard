@@ -49,5 +49,6 @@ export const authOptions = {
       return true; // Return true to continue the sign-in process
     },
   },
+  secret: 'testString',
 };
 export default NextAuth(authOptions);
