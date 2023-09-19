@@ -2,13 +2,14 @@
 
 import React from 'react';
 
-const UpdateAlert = () => {
+const UpdateAlert = ({ message }) => {
+  const originalMessage = message || ' Information udpated successfully!';
   return (
     <div
       className="alert alert-success alert-dismissible fade show"
       role="alert"
     >
-      Information udpated successfully!
+      {originalMessage}
     </div>
   );
 };

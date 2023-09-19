@@ -37,6 +37,7 @@ function Info() {
         setRestaurantAddress(data.restaurantAddress);
         setReviewQuestion(data.reviewQuestion);
         setCurrentUserId(data._id);
+        localStorage.setItem('loginUserId', data._id);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -125,7 +126,7 @@ function Info() {
             onChange={(e) => setRestaurantAddress(e.target.value)}
           />
         </div>
-        <div className="col-sm-12 mb-3">
+        {/* <div className="col-sm-12 mb-3">
           <label htmlFor="reviewQuestion" className="form-label">
             Review Question
           </label>
@@ -137,7 +138,7 @@ function Info() {
             value={reviewQuestion}
             onChange={(e) => setReviewQuestion(e.target.value)}
           />
-        </div>
+        </div> */}
         <div className="col-sm-12 mb-3">
           <button
             className="btn btn-primary btn-block"

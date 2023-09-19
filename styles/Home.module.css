@@ -133,3 +133,32 @@
   border: 1px solid #007bff; /* Change to your desired active border color */
   color: #fff; /* Change to your desired text color in the active state */
 }
+
+.textareaContainer {
+  position: relative;
+}
+
+.textarea {
+  transition: opacity 0.3s ease;
+}
+
+.textarea.faded {
+  opacity: 0.6;
+}
+
+.submitButton {
+  transition: opacity 0.3s ease;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+}
+
+#homeContainer {
+  height: 100vh;
+}
+@media only screen and (max-width: 580px) {
+  #homeContainer {
+    height: 20vh;
+  }
+}

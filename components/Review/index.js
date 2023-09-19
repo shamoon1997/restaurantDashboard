@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import GetReviews from '../../hooks/getReviews';
 
 const reviews = [
   { review: 'Great experience!', date: '2023-09-15' },
@@ -7,6 +8,17 @@ const reviews = [
 ];
 
 const Review = () => {
+  const [userId, setUserId] = useState();
+  const reviewsGot = GetReviews(userId);
+
+  console.log('reviews', reviewsGot);
+
+  useEffect(() => {
+    if (localStorage.getItem('loginUserId')) {
+      setUserId(localStorage.getItem('loginUserId'));
+    }
+  }, []);
+
   return (
     <div className="table-responsive">
       <table className="table table-striped">

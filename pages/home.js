@@ -18,6 +18,7 @@ const Dashboard = () => {
     return null;
   }
   const handleLogout = async () => {
+    localStorage.removeItem('loginUserId');
     await signOut('google').then(() => {
       router.push('/login');
     });
@@ -27,7 +28,7 @@ const Dashboard = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-lg-2 col-md-3 col-sm-4 bg-light sidebar">
-          <div className="d-flex flex-column p-3" style={{ height: '100vh' }}>
+          <div id="homeContainer" className="d-flex flex-column p-3">
             <button
               className={`btn btn-light mb-3 ${
                 InfoButtonClicked ? 'active' : ''
