@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   name: String,
   restaurantName: String,
   restaurantAddress: String,
+  reviewQuestion: String,
 });
 
 export default mongoose.models.User || mongoose.model('User', userSchema);

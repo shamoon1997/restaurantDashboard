@@ -16,13 +16,15 @@ export default async function handler(req, res) {
       res.status(500).json({ error: 'Server error' });
     }
   } else if (req.method === 'POST') {
-    const { email, restaurantName, restaurantAddress } = req.body;
+    const { email, restaurantName, restaurantAddress, reviewQuestion } =
+      req.body;
     try {
       const response = await User.findOneAndUpdate(
         { email: email },
         {
           restaurantName: restaurantName,
           restaurantAddress: restaurantAddress,
+          reviewQuestion: reviewQuestion,
         },
         {
           new: true,

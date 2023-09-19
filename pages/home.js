@@ -34,7 +34,7 @@ const Dashboard = () => {
               }`}
               onClick={() => {
                 setInfoButtonClicked(true);
-                setReviewButtonClicked((prevState) => !prevState);
+                setReviewButtonClicked(false);
               }}
             >
               Info
@@ -43,7 +43,7 @@ const Dashboard = () => {
               className={`btn btn-light ${reviewButtonClicked ? 'active' : ''}`}
               onClick={() => {
                 setReviewButtonClicked(true);
-                setInfoButtonClicked((prevState) => !prevState);
+                setInfoButtonClicked(false);
               }}
             >
               Reviews

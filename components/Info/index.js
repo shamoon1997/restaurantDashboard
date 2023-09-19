@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import UpdateAlert from '../UpdateAlert';
+import QRCodeGenerator from '../QrCodeGenerator';
+import jsPDF from 'jspdf';
 
 function Info() {
   const session = useSession();
   const [restaurantName, setRestaurantName] = useState();
   const [restaurantAddress, setRestaurantAddress] = useState();
+  const [reviewQuestion, setReviewQuestion] = useState();
   const [showUpdateAlert, setShowUpdateAlert] = useState();
+  const [showQRCode, setShowQRCode] = useState(false);
+  const [currentHostName, setCurrentHostName] = useState();
+  const [currentUserId, setCurrentUserId] = useState();
+
+  useEffect(() => {
+    if (window.location.hostname === 'localhost') {
+      setCurrentHostName('http://' + window.location.hostname + ':3000');
+    } else {
+      setCurrentHostName('https://' + window.location.hostname);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +35,8 @@ function Info() {
         console.log('data', data);
         setRestaurantName(data.restaurantName);
         setRestaurantAddress(data.restaurantAddress);
+        setReviewQuestion(data.reviewQuestion);
+        setCurrentUserId(data._id);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -44,6 +60,7 @@ function Info() {
             email: session?.data?.user?.email,
             restaurantName: restaurantName,
             restaurantAddress: restaurantAddress,
+            reviewQuestion: reviewQuestion,
           }),
         });
 
@@ -63,48 +80,100 @@ function Info() {
       }
     }
   };
+  const handlePrintQRCode = () => {
+    const qrCodeDiv = document.getElementById('qrCodeDiv');
+
+    if (qrCodeDiv) {
+      const pdf = new jsPDF();
+      const canvasElement = qrCodeDiv.querySelector('canvas');
+
+      if (canvasElement) {
+        const imageData = canvasElement.toDataURL('image/png');
+        pdf.addImage(imageData, 'PNG', 15, 40, 180, 180);
+        pdf.save('qr_code.pdf');
+      }
+    }
+  };
 
   console.log('session in Info: ', session);
   return (
-    <div className="row">
-      <div className="col-sm-6 mb-3">
-        <label htmlFor="restaurantName" className="form-label">
-          Restaurant Name
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="restaurantName"
-          placeholder="Enter restaurant name"
-          style={{ height: '50px', width: '100%' }}
-          value={restaurantName}
-          onChange={(e) => setRestaurantName(e.target.value)}
-        />
+    <div className="container">
+      <div className="row">
+        <div className="col-sm-6 mb-3">
+          <label htmlFor="restaurantName" className="form-label">
+            Restaurant Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="restaurantName"
+            placeholder="Enter restaurant name"
+            value={restaurantName}
+            onChange={(e) => setRestaurantName(e.target.value)}
+          />
+        </div>
+        <div className="col-sm-6 mb-3">
+          <label htmlFor="restaurantAddress" className="form-label">
+            Restaurant Address
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="restaurantAddress"
+            placeholder="Enter restaurant address"
+            value={restaurantAddress}
+            onChange={(e) => setRestaurantAddress(e.target.value)}
+          />
+        </div>
+        <div className="col-sm-12 mb-3">
+          <label htmlFor="reviewQuestion" className="form-label">
+            Review Question
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="reviewQuestion"
+            placeholder="Enter the review question"
+            value={reviewQuestion}
+            onChange={(e) => setReviewQuestion(e.target.value)}
+          />
+        </div>
+        <div className="col-sm-12 mb-3">
+          <button
+            className="btn btn-primary btn-block"
+            onClick={() => handleUpdation()}
+          >
+            Update
+          </button>
+        </div>
+        <div className="col-sm-12">
+          <button
+            className="btn btn-primary btn-block"
+            onClick={() => setShowQRCode(!showQRCode)}
+          >
+            Toggle QR Code
+          </button>
+          {showQRCode && (
+            <>
+              <div id="qrCodeDiv" style={{ 'margin-top': '20px' }}>
+                <QRCodeGenerator
+                  slug={currentHostName + '/review/' + currentUserId}
+                />
+              </div>
+
+              <div className="col-sm-12" style={{ 'margin-top': '20px' }}>
+                <button
+                  className="btn btn-primary btn-block"
+                  onClick={handlePrintQRCode}
+                >
+                  Print QR Code
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+        {showUpdateAlert && <UpdateAlert />}
       </div>
-      <div className="col-sm-6 mb-3">
-        <label htmlFor="restaurantAddress" className="form-label">
-          Restaurant Address
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="restaurantAddress"
-          placeholder="Enter restaurant address"
-          style={{ height: '50px', width: '100%' }}
-          value={restaurantAddress}
-          onChange={(e) => setRestaurantAddress(e.target.value)}
-        />
-      </div>
-      <div className="col-sm-12">
-        <button
-          className="btn btn-primary btn-block" // Use btn-block to make it full width
-          style={{ height: '50px' }}
-          onClick={() => handleUpdation()}
-        >
-          Update
-        </button>
-      </div>
-      {showUpdateAlert && <UpdateAlert />}
     </div>
   );
 }
