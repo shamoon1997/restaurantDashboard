@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import GetReviews from '../../hooks/getReviews';
 
-const reviews = [
-  { review: 'Great experience!', date: '2023-09-15' },
-  { review: 'Amazing service!', date: '2023-09-17' },
-  // Add more reviews as needed
-];
-
 const Review = () => {
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState(null); // Initialize with null
   const reviewsGot = GetReviews(userId);
+  const [reviews, setReviews] = useState([]);
 
   console.log('reviews', reviewsGot);
 
@@ -18,6 +13,12 @@ const Review = () => {
       setUserId(localStorage.getItem('loginUserId'));
     }
   }, []);
+
+  useEffect(() => {
+    if (reviewsGot && reviewsGot.data) {
+      setReviews(reviewsGot.data); // Update state with valid data
+    }
+  }, [reviewsGot]);
 
   return (
     <div className="table-responsive">
@@ -29,12 +30,18 @@ const Review = () => {
           </tr>
         </thead>
         <tbody>
-          {reviews.map((review, index) => (
-            <tr key={index}>
-              <td>{review.review}</td>
-              <td>{review.date}</td>
+          {reviews.length > 0 ? (
+            reviews.map((review, index) => (
+              <tr key={index}>
+                <td>{review.review}</td>
+                <td>{review.time}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="2">No reviews found.</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

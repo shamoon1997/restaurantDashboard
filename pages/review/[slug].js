@@ -25,6 +25,7 @@ function Review() {
   const [review, setReview] = useState('');
   const [consumerId, setConsumerId] = useState();
   const [reviewSubmitted, setReviewSubmitted] = useState();
+  const [disabledTextArea, setDisabledTextArea] = useState(false);
 
   const isValidResponse = useApiValidation(slug);
 
@@ -57,6 +58,7 @@ function Review() {
       .then((data) => {
         setReview('');
         setReviewSubmitted(true);
+        setDisabledTextArea(true);
       })
       .catch((error) => console.error('Error submitting review:', error));
     setReview('');
@@ -86,8 +88,9 @@ function Review() {
               <textarea
                 className={`form-control ${styles.textarea}`}
                 id="reviewTextarea"
-                rows="5"
+                rows="8"
                 value={review}
+                disabled={disabledTextArea}
                 onChange={handleReviewChange}
               />
             </div>
