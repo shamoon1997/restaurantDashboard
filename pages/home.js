@@ -25,7 +25,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ height: '100vh' }}>
       <div className="row">
         <div className="col-lg-2 col-md-3 col-sm-4 bg-light sidebar">
           <div id="homeContainer" className="d-flex flex-column p-3">

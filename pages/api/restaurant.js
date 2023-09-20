@@ -1,4 +1,3 @@
-// pages/api/posts.js
 import connectDB from '../../lib/db';
 import User from '../../models/User';
 
@@ -6,7 +5,6 @@ connectDB();
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    console.log('GET request received!');
     const email = req.query.email;
     try {
       const user = await User.findOne({ email: email });
@@ -30,7 +28,7 @@ export default async function handler(req, res) {
           new: true,
         }
       );
-      console.log('User updated:', response);
+
       res.status(201).json({
         status: 201,
         response: response,

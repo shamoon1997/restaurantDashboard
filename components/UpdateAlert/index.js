@@ -1,5 +1,3 @@
-// components/UpdateAlert.js
-
 import React from 'react';
 
 const UpdateAlert = ({ message }) => {

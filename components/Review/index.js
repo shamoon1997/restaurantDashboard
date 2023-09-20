@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import GetReviews from '../../hooks/getReviews';
 
 const Review = () => {
-  const [userId, setUserId] = useState(null); // Initialize with null
+  const [userId, setUserId] = useState(null);
   const reviewsGot = GetReviews(userId);
   const [reviews, setReviews] = useState([]);
-
-  console.log('reviews', reviewsGot);
 
   useEffect(() => {
     if (localStorage.getItem('loginUserId')) {
@@ -16,7 +14,7 @@ const Review = () => {
 
   useEffect(() => {
     if (reviewsGot && reviewsGot.data) {
-      setReviews(reviewsGot.data); // Update state with valid data
+      setReviews(reviewsGot.data);
     }
   }, [reviewsGot]);
 

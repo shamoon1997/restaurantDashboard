@@ -7,7 +7,6 @@ import Image from 'next/image';
 const LoginPage = () => {
   const router = useRouter();
   const session = useSession();
-  console.log('session', session);
 
   if (session.status === 'loading') {
     return <p>Loading...</p>;
@@ -19,7 +18,7 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     const response = await signIn('google');
-    console.log('response: ', response);
+
     if (response?.error) {
       console.error('Google login failed:', response.error);
     }
@@ -31,11 +30,11 @@ const LoginPage = () => {
         <h2 className="mb-4">Welcome to Dashboard</h2>
         <button className="btn btn-success btn-block" onClick={handleLogin}>
           <Image
-            src="/googleLogo.png" // Adjust the path to your Google logo image
+            src="/googleLogo.png"
             alt="Google Logo"
-            width={20} // Adjust the width as needed
-            height={20} // Adjust the height as needed
-            className="mr-2" // Add some margin to the right for spacing
+            width={20}
+            height={20}
+            className="mr-2"
           />{' '}
           Authenticate with Google
         </button>

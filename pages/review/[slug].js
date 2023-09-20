@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../../styles/Home.module.css'; // Import CSS module
+import styles from '../../styles/Home.module.css';
 import UpdateAlert from '../../components/UpdateAlert';
 import useApiValidation from '../../hooks/ValidateAPI';
 
@@ -29,8 +29,6 @@ function Review() {
 
   const isValidResponse = useApiValidation(slug);
 
-  console.log('isValidResponse: ', isValidResponse);
-
   useEffect(() => {
     setConsumerId(slug);
   }, [slug]);
@@ -40,7 +38,6 @@ function Review() {
   };
 
   const handleSubmitReview = () => {
-    // Simulate a dummy API call
     const requestBody = {
       review: review,
       time: formatTimestamp(Date.now()),

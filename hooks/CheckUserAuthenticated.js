@@ -6,17 +6,17 @@ export default function CheckUserAuthenticated() {
   const router = useRouter();
 
   if (status === 'loading') {
-    return null; // or a loading indicator
+    return null;
   }
 
   if (status === 'authenticated') {
     router.push('/home');
-    return null; // component will be unmounted anyway
+    return null;
   }
 
   if (status === 'unauthenticated') {
     router.push('/login');
-    return null; // component will be unmounted anyway
+    return null;
   }
 
   return null;

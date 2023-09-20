@@ -1,4 +1,3 @@
-// components/Layout.js
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Layout = ({ children }) => {

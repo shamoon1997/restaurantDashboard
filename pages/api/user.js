@@ -1,4 +1,3 @@
-// pages/api/posts.js
 import connectDB from '../../lib/db';
 import User from '../../models/User';
 
@@ -6,7 +5,6 @@ connectDB();
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    console.log('request received! ');
     const email = req.query.email;
     const id = req.query.id;
     let user;

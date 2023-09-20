@@ -32,7 +32,6 @@ function Info() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('data', data);
         setRestaurantName(data.restaurantName);
         setRestaurantAddress(data.restaurantAddress);
         setReviewQuestion(data.reviewQuestion);
@@ -45,7 +44,6 @@ function Info() {
 
     fetchData();
 
-    console.log('session.data.user.email', session?.data?.user?.email);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.data?.user?.email]);
 
@@ -96,7 +94,6 @@ function Info() {
     }
   };
 
-  console.log('session in Info: ', session);
   return (
     <div className="container">
       <div className="row">
