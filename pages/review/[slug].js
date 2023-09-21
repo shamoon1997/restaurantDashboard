@@ -27,7 +27,7 @@ function Review() {
   const [reviewSubmitted, setReviewSubmitted] = useState();
   const [disabledTextArea, setDisabledTextArea] = useState(false);
 
-  const isValidResponse = useApiValidation(slug);
+  const { loading, isValidResponse } = useApiValidation(slug);
 
   useEffect(() => {
     setConsumerId(slug);
@@ -74,7 +74,7 @@ function Review() {
 
   return (
     <div className="container mt-4">
-      {isValidResponse && (
+      {isValidResponse && !loading ? (
         <div className="row">
           <div className="col-12">
             <h2 className="mb-3">Write a Review</h2>
@@ -105,8 +105,9 @@ function Review() {
             )}
           </div>
         </div>
+      ) : (
+        <p></p>
       )}
-      {!isValidResponse && <p>InValid Page</p>}
     </div>
   );
 }

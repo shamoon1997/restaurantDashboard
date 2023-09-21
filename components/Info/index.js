@@ -6,13 +6,14 @@ import jsPDF from 'jspdf';
 
 function Info() {
   const session = useSession();
-  const [restaurantName, setRestaurantName] = useState();
-  const [restaurantAddress, setRestaurantAddress] = useState();
+  const [restaurantName, setRestaurantName] = useState(null);
+  const [restaurantAddress, setRestaurantAddress] = useState(null);
   const [reviewQuestion, setReviewQuestion] = useState();
   const [showUpdateAlert, setShowUpdateAlert] = useState();
   const [showQRCode, setShowQRCode] = useState(false);
   const [currentHostName, setCurrentHostName] = useState();
   const [currentUserId, setCurrentUserId] = useState();
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     if (window.location.hostname === 'localhost') {
@@ -147,7 +148,17 @@ function Info() {
         <div className="col-sm-12">
           <button
             className="btn btn-primary btn-block"
-            onClick={() => setShowQRCode(!showQRCode)}
+            onClick={() => {
+              if (restaurantName && restaurantAddress) {
+                setShowQRCode(!showQRCode);
+              } else {
+                setShowAlert(true);
+
+                setTimeout(() => {
+                  setShowAlert(false);
+                }, 2000);
+              }
+            }}
           >
             Toggle QR Code
           </button>
@@ -170,6 +181,16 @@ function Info() {
             </>
           )}
         </div>
+        {showAlert && (
+          <div style={{ 'margin-top': '20px' }}>
+            <div
+              className="alert alert-warning alert-dismissible fade show"
+              role="alert"
+            >
+              Please find restaurant Information first to generate QR code.
+            </div>
+          </div>
+        )}
         {showUpdateAlert && <UpdateAlert />}
       </div>
     </div>

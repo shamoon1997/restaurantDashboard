@@ -28,14 +28,15 @@ const Review = () => {
           </tr>
         </thead>
         <tbody>
-          {reviews.length > 0 ? (
+          {reviews.length > 0 &&
+            !reviewsGot.loading &&
             reviews.map((review, index) => (
               <tr key={index}>
                 <td>{review.review}</td>
                 <td>{review.time}</td>
               </tr>
-            ))
-          ) : (
+            ))}
+          {reviews.length === 0 && !reviewsGot.loading && (
             <tr>
               <td colSpan="2">No reviews found.</td>
             </tr>
